@@ -106,7 +106,7 @@ export default function VaultTable() {
                       <Button
                         onClick={() => setSelectedCrypto(vault)}
                         size="sm"
-                        className="w-8 h-8 p-0 bg-green-600 hover:bg-green-700 text-white"
+                        className="w-8 h-8 p-0 text-secondary-foreground"
                       >
                         +
                       </Button>
@@ -169,7 +169,7 @@ export default function VaultTable() {
 
                   <Button
                     size="sm"
-                    className="w-8 h-8 p-0 bg-red-600 hover:bg-red-700 text-white "
+                    className="w-8 h-8 p-0 bg-secondary-background text-secondary-foreground"
                   >
                     -
                   </Button>

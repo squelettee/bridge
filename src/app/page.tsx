@@ -3,9 +3,10 @@
 import NavHome from "@/components/nav-home";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-
+  const router = useRouter();
 
   return (
     <div className="h-screen w-full">
@@ -16,7 +17,7 @@ export default function Home() {
           <Button variant={"neutral"}>
             Learn More
           </Button>
-          <Button variant={"default"}>
+          <Button variant={"default"} onClick={() => router.push("/dashboard")}>
             Open App
           </Button>
         </div>
