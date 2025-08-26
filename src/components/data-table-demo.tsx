@@ -1,15 +1,5 @@
 import { Button } from "@/components/ui/button"
 import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer"
-import {
   Table,
   TableBody,
   TableCell,
@@ -18,7 +8,8 @@ import {
   TableRow
 } from "@/components/ui/table"
 import Image from "next/image"
-import { useState } from "react"
+import DepositDialog from "./deposit-dialog"
+import WithdrawDialog from "./withdraw-dialog"
 
 const vaultData = [
   {
@@ -57,7 +48,15 @@ const vaultData = [
 ]
 
 export default function VaultTable() {
-  const [selectedCrypto, setSelectedCrypto] = useState<typeof vaultData[0] | null>(null)
+  const handleDeposit = (crypto: typeof vaultData[0], amount: string) => {
+    console.log(`Depositing ${amount} ${crypto.symbol}`)
+    // Ici vous pouvez ajouter la logique pour traiter le dépôt
+  }
+
+  const handleWithdraw = (crypto: typeof vaultData[0], amount: string, isInstant: boolean) => {
+    console.log(`Withdrawing ${amount} ${crypto.symbol} - Instant: ${isInstant}`)
+    // Ici vous pouvez ajouter la logique pour traiter le retrait
+  }
 
   return (
     <>
@@ -101,78 +100,31 @@ export default function VaultTable() {
               <TableCell className="text-right text-muted-foreground">{vault.userShare}</TableCell>
               <TableCell className="text-center">
                 <div className="flex items-center justify-center space-x-2">
-                  <Drawer>
-                    <DrawerTrigger asChild>
+                  <DepositDialog
+                    trigger={
                       <Button
-                        onClick={() => setSelectedCrypto(vault)}
                         size="sm"
                         className="w-8 h-8 p-0 text-secondary-foreground"
                       >
                         +
                       </Button>
-                    </DrawerTrigger>
-                    <DrawerContent className="bg-background h-1/2">
-                      <div className="mx-auto w-[400px]">
-                        <DrawerHeader>
-                          <DrawerTitle>Deposit {selectedCrypto?.symbol}</DrawerTitle>
-                          <DrawerDescription>
-                            Add {selectedCrypto?.symbol} to the vault and start earning points
-                          </DrawerDescription>
-                          <div className="mt-2 text-xs text-orange-600">
-                            Please note: Withdrawals take 7 days to process.
-                          </div>
-                        </DrawerHeader>
-                        <div className="px-4 py-2 space-y-4">
-                          <div className="grid grid-cols-2 gap-4 text-sm">
-                            <div>
-                              <p className="text-muted-foreground">Total Vault</p>
-                              <p className="font-medium text-foreground">{selectedCrypto?.totalVault}</p>
-                            </div>
-                            <div>
-                              <p className="text-muted-foreground">Points Earned</p>
-                              <p className="font-medium text-green-600 dark:text-green-400">{selectedCrypto?.pointsPerDeposit}</p>
-                            </div>
-                            <div>
-                              <p className="text-muted-foreground">Min Deposit</p>
-                              <p className="font-medium text-foreground">{selectedCrypto?.minDeposit}</p>
-                            </div>
-                            <div>
-                              <p className="text-muted-foreground">Max Deposit</p>
-                              <p className="font-medium text-foreground">{selectedCrypto?.maxDeposit}</p>
-                            </div>
-                          </div>
-                          <div className="space-y-2">
-                            <label className="text-sm font-medium">Amount to deposit</label>
-                            <input
-                              type="number"
-                              placeholder={`Enter amount in ${selectedCrypto?.asset}`}
-                              className="w-full p-2 border rounded-md bg-background"
-                            />
-                          </div>
-                        </div>
-                        <DrawerFooter className="grid grid-cols-2">
-                          <Button variant="noShadow" className="bg-green-600 hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 text-white">
-                            Confirm Deposit
-                          </Button>
-                          <DrawerClose asChild>
-                            <Button
-                              className="bg-secondary hover:bg-secondary/80 text-secondary-foreground"
-                              variant="noShadow"
-                            >
-                              Cancel
-                            </Button>
-                          </DrawerClose>
-                        </DrawerFooter>
-                      </div>
-                    </DrawerContent>
-                  </Drawer>
+                    }
+                    preselectedCrypto={vault}
+                    onDeposit={handleDeposit}
+                  />
 
-                  <Button
-                    size="sm"
-                    className="w-8 h-8 p-0 bg-secondary-background text-secondary-foreground"
-                  >
-                    -
-                  </Button>
+                  <WithdrawDialog
+                    trigger={
+                      <Button
+                        size="sm"
+                        className="w-8 h-8 p-0 bg-secondary-background text-secondary-foreground"
+                      >
+                        -
+                      </Button>
+                    }
+                    preselectedCrypto={vault}
+                    onWithdraw={handleWithdraw}
+                  />
                 </div>
               </TableCell>
             </TableRow>
