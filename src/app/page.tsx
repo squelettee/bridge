@@ -1,6 +1,5 @@
 "use client"
 
-import ButtonIconTwitter from "@/components/icon-twitter";
 import NavHome from "@/components/nav-home";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -42,26 +41,14 @@ export default function Home() {
       </main>
       <footer className="fixed left-0 bottom-0 z-20 mx-auto flex h-[70px] w-full items-center border-t-4 border-border bg-secondary-background px-5">
         <div className="mx-auto flex w-[1300px] text-foreground max-w-full items-center justify-between">
-          <div className="flex items-center xl:gap-10 gap-10">
-            <a
-              href="https://twitter.com/simplicitycash"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 hover:underline mt-1"
-            >
-              Follow us on Twitter <ButtonIconTwitter />
-            </a>
-          </div>
+          <div className="flex items-center xl:gap-10 gap-10" />
           <div className="flex items-center gap-4">
-            <Button variant={"neutral"}>
+            <Button variant={"neutral"} onClick={() => router.push("/docs")}>
               Learn More
             </Button>
-            <a
-              href="/docs"
-              className="inline-flex items-center px-4 py-2 rounded-base font-medium border border-border bg-background hover:underline transition"
-            >
+            <Button variant={"neutral"} onClick={() => router.push("/docs")}>
               Docs
-            </a>
+            </Button>
           </div>
         </div>
       </footer>
